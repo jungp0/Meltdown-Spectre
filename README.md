@@ -1,10 +1,10 @@
 # Meltdown and Spectre: Exploitations of the modern microprocessor design
 
-<p style="text-align:center;">
-<img src="https://meltdownattack.com/meltdown.png" height = 100px style="padding-right: 100px; padding left: 100px;">
+<div>
+<img src="https://meltdownattack.com/meltdown.png" height = 150px style="padding-right: 100px; padding left: 100px;">
 
-<img src="https://meltdownattack.com/spectre.png" height = 100px style="padding-right: 100px; padding left: 100px;">
-</p>
+<img src="https://meltdownattack.com/spectre.png" height = 150px style="padding-right: 100px; padding left: 100px;">
+</div>
 
 ## Background 
 
