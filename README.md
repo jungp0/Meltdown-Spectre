@@ -22,7 +22,7 @@ On 3 January 2018, the public firstly got to know the existence of the vulnerabi
 
 [**Meltdown**](https://en.wikipedia.org/wiki/Meltdown_(security_vulnerability))([CVE-2017-5754](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-5754)) and [**Spectre**](https://en.wikipedia.org/wiki/Spectre_(security_vulnerability))([CVE-2017-5753](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-5753)) allow programs to steal data which is currently processed on the computer. While programs are typically not permitted to read data from other programs, a malicious program can exploit Meltdown and Spectre to get hold of secrets stored in the memory of other running programs. This might include passwords stored in a password manager or browser, personal photos, emails, instant messages and even business-critical documents.
 
-Spectre can be exploited remotely by code hosted on remote malicious web pages in JavaScript.The malware would have access to all the memory mapped to the address space of the running browser.
+Spectre can be exploited remotely by code hosted on remote malicious web pages in JavaScript. The malware would have access to all the memory mapped to the address space of the running browser.
 
 ***
 
