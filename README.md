@@ -203,7 +203,7 @@ Microsoft provided solutions as below:
 
 - **[Proof-of-concept demo](https://github.com/IAIK/meltdown)**
 
-    Clone the git repository from [meltdownattack](https://meltdownattack.com/):
+    Clone the git repository from [meltdownattack](https://github.com/IAIK/meltdown):
 
     ```git clone https://github.com/IAIK/meltdown.git```
 
@@ -237,6 +237,10 @@ Microsoft provided solutions as below:
 
 - **Examples**
 
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/bReA1dvGJ6Y/0.jpg)](http://www.youtube.com/watch?bReA1dvGJ6Y "Meltdown in Action: Dumping memory")
+
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/RbHbFkh6eeE/0.jpg)](http://www.youtube.com/watch?RbHbFkh6eeE "Meltdown demo - Spying on passwords")
+
 <figure class="video_container">
   <iframe src="https://www.youtube.com/embed/RbHbFkh6eeE" frameborder="0" allowfullscreen="true"> </iframe>
 </figure>
@@ -244,8 +248,6 @@ Microsoft provided solutions as below:
 <figure class="video_container">
   <iframe src="https://www.youtube.com/embed/bReA1dvGJ6Y" frameborder="0" allowfullscreen="true"> </iframe>
 </figure>
-
-<br></br>
 
 ## References
 [1] M. Smotherman, “IBM Stretch (7030) -- Aggressive Uniprocessor Parallelism,” Organization Sketch of IBM Stretch. [Online]. Available: https://people.cs.clemson.edu/~mark/stretch.html. [Accessed: 27-Mar-2021]. 
