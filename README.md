@@ -174,7 +174,7 @@ Linux, macOS, IOS and Windows all released patches to mitigate the impacts.
 
 Microsoft provided solutions as below:
 
-<table>
+<table style="text-align:center;">
 <caption>Summary of mitigation on Microsoft Windows [5]</caption>
 <tbody><tr>
 <th>Vulnerability</th>
