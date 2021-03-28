@@ -132,9 +132,9 @@ The result of instruction 2 will be stored in re-order buffer(ROB). When the ins
 
 You may have found out the vulnerabilities.
 
-1. the instruction 2 can run without the result of instruction 1 
+1. The instruction 2 can run without the result of instruction 1. 
 
-2. if the branch prediction is wrong, the instruction 2 will be discarded
+2. If the branch prediction is wrong, the instruction 2 will be discarded.
 
 ## What does it mean
 
@@ -142,7 +142,7 @@ I will give you two more messages:
 
 1. At the architectural level documented in processor data books, any results of misprediction are specified to be discarded after the fact, the resulting speculative execution may still leave around side effects, like loaded cache lines. 
 
-2. In intel chips, all physical memory is mapped to [kernel memory](https://en.wikipedia.org/wiki/Kernel_(operating_system)), and all kernel memory is mapped to the visual address space of every user process with privilege check[6]
+2. In intel chips, all physical memory is mapped to [kernel memory](https://en.wikipedia.org/wiki/Kernel_(operating_system)), and all kernel memory is mapped to the visual address space of every user process with privilege check.[6]
 
 Considering what if a user process want to access an address in kernel memory without privilege:
 
