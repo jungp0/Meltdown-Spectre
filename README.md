@@ -16,19 +16,13 @@ In 2015, an article pointed out the possibility of cache attack on mobile device
 
 On 3 January 2018, the public firstly got to know the existence of the vulnerabilities of microprocessors that attackers can steal processed data without privilege.[3] **All Intel x86 microprocessors, IBM POWER processors, and some ARM-based microprocessors were affected.** The vulnerabilities crossed platforms and operating systems, including IOS, Linux, macOS, and Windows. The vulnerabilities melted down not only the security boundaries, but also the security confidence.
 
-***
-
 ## Who are they 
 
 [**Meltdown**](https://en.wikipedia.org/wiki/Meltdown_(security_vulnerability))([CVE-2017-5754](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-5754)) and [**Spectre**](https://en.wikipedia.org/wiki/Spectre_(security_vulnerability))([CVE-2017-5753](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-5753)) allow programs to steal data which is currently processed on the computer. While programs are typically not permitted to read data from other programs, a malicious program can exploit Meltdown and Spectre to get hold of secrets stored in the memory of other running programs. This might include passwords stored in a password manager or browser, personal photos, emails, instant messages and even business-critical documents.
 
 Spectre can be exploited remotely by code hosted on remote malicious web pages in JavaScript. The malware would have access to all the memory mapped to the address space of the running browser.
 
-***
-
 ## How do they work
-
-***Spectre opens your door for Meltdown***
 
 We should talk about [instruction pipelining](https://en.wikipedia.org/wiki/Instruction_pipelining) firstly, which is used for instruction parallelism in a single processor. 
 
@@ -138,27 +132,45 @@ The result of instruction 2 will be stored in re-order buffer(ROB). When the ins
 
 You may have found out the vulnerabilities.
 
-1. the instruction 2 can run without the result of instruction 1
+1. the instruction 2 can run without the result of instruction 1 
 
-2. if the branch prediction is wrong, the track of instruction 2 will be totally removed
+2. if the branch prediction is wrong, the instruction 2 will be discarded
 
 ## What does it mean
 
-At the architectural level documented in processor data books, any results of misprediction are specified to be discarded after the fact, the resulting speculative execution may still leave around side effects, like loaded cache lines. 
+I will give you two more messages:
 
-Spectre can abuse the branch prediction simply by an "if-then" function. Malicious program can "train" processor to predict an intended value of the if statement, then read cache by misleading. Processor will be fooled, load the cache, have cache read, discard the "wrong" instruction, and **even forget it has loaded the cache**. Therefore, Spectre attack is hard to detect.
+1. At the architectural level documented in processor data books, any results of misprediction are specified to be discarded after the fact, the resulting speculative execution may still leave around side effects, like loaded cache lines. 
 
-It is not the end, Meltdown is a perfect match.
+2. In intel chips, all physical memory is mapped to [kernel memory](https://en.wikipedia.org/wiki/Kernel_(operating_system)), and all kernel memory is mapped to the visual address space of every user process with privilege check[6]
 
-Meltdown relies on a CPU race condition that can arise between instruction execution and privilege checking. Briefly speaking, the instruction execution leaves side effects that constitute information not hidden to the process by the privilege check. The process carrying out Meltdown then uses these side effects to infer the values of memory mapped data, bypassing the privilege check.[6]
+Considering what if a user process want to access an address in kernel memory without privilege:
 
-Although Meltdown can only read memory in one instruction per attack, it can still read at high speed. Every address of interest, and depending on other running processes, the result may contain passwords, encryption data, and any other sensitive information, from any address of any process that exists in the memory map. 
+- There are two instructions: 
+
+    1. Check the privilege to access the address
+
+    2. Read the address
+
+- Most of processors think the instruction 2 can run in the meanwhile of instruction 1. If the privilege check fails, the register loaded in instruction 2 will be reset. 
+
+- Nevertheless, the cache still store the value in the process, because reset cache is too expensive.
+
+The procedures above is what **Meltdown** exploits.
+
+The value in cache need to be capture by cache attack like [side-channel attack](https://en.wikipedia.org/wiki/Side-channel_attack#:~:text=Cache%20attack%20%E2%80%94%20attacks%20based%20on,a%20type%20of%20cloud%20service.). We will not dig too deep here.
+
+***
+
+What if the the processors don't think the instruction 2 is independent from instruction 1, and determine whether to run it by branch prediction?
+
+**Spectre** abuses the branch prediction simply by an "if-then" function. Malicious program can "train" processor to predict an intended value of the if statement, then poison the branch to return the familiar road. (Spectre has much more variances and we just discuss the part associated with Meltdown)
 
 *Check Paper about [Meltdown](https://meltdownattack.com/meltdown.pdf) and [Spectre](https://spectreattack.com/spectre.pdf)*
 
 ## Mitigation
 
-Linux, macOS, IOS and Windows all released patches to mitigate the impacts. However, the architecture-level solution has not be announced. 
+Linux, macOS, IOS and Windows all released patches to mitigate the impacts.
 
 Microsoft provided solutions as below:
 
@@ -197,7 +209,7 @@ Microsoft provided solutions as below:
 <td>No
 </td></tr></tbody></table>
 
-***
+As mentioned before, one key concept of Meltdown is the map chain among user process memory, kernel memory, and physical memory. Kernel page-table isolation establishes a better barrier between user space and kernel space memory which effectively control the impact of Meltdown.
 
 ## Meltdown in action
 
@@ -232,8 +244,6 @@ Microsoft provided solutions as below:
 5. Dump the memory
 
     ```./memory_filler 9```
-
-<br></br>
 
 - **Examples**
 
