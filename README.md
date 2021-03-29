@@ -18,7 +18,7 @@ On 3 January 2018, the public firstly got to know the existence of the vulnerabi
 
 ## Who are they 
 
-[**Meltdown**](https://en.wikipedia.org/wiki/Meltdown_(security_vulnerability))([CVE-2017-5754](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-5754)) and [**Spectre**](https://en.wikipedia.org/wiki/Spectre_(security_vulnerability))([CVE-2017-5753](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-5753)) allow programs to steal data which is currently processed on the computer. While programs are typically not permitted to read data from other programs, a malicious program can exploit Meltdown and Spectre to get hold of secrets stored in the memory of other running programs. This might include passwords stored in a password manager or browser, personal photos, emails, instant messages and even business-critical documents.
+[**Meltdown**](https://en.wikipedia.org/wiki/Meltdown_(security_vulnerability))([CVE-2017-5754](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-5754)) and [**Spectre**](https://en.wikipedia.org/wiki/Spectre_(security_vulnerability))([CVE-2017-5753](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-5753)) allow programs to steal data which is currently processed on the computer. While programs are typically not permitted to read data from other programs, a malicious program can exploit Meltdown and Spectre to get hold of secrets stored in the memory of other running programs. This might include passwords stored in a password manager or browser, personal photos, emails, instant messages and even business-critical documents.[5]
 
 Spectre can be exploited remotely by code hosted on remote malicious web pages in JavaScript. The malware would have access to all the memory mapped to the address space of the running browser.
 
@@ -165,6 +165,14 @@ The value in cache need to be capture by cache attack like [side-channel attack]
 What if the the processors don't think the instruction 2 is independent from instruction 1, and determine whether to run it by branch prediction?
 
 **Spectre** abuses the branch prediction simply by an "if-then" function. Malicious program can "train" processor to predict an intended value of the if statement, then poison the branch to return the familiar road. (Spectre has much more variances and we just discuss the part associated with Meltdown)
+
+Each process has a boundary to access. If we define array[10], we can not access array[20]. This time, the memory read needs a dependency that whether the address within the access boundary 
+It is the difference with Meltdown. Meltdown access the virtual address in kernel memory and check the page table to recover the real memory address in physical memory. 
+
+Spectre is not the case. It can bypass the boundary check, and read arbitrary memory between user processes, rather than all physical memory, but the leaked info may still contain sensitive data like password, emails, etc.
+Spectre can be exploited remotely in Javascript, so it is hard to say spectre is not as impressive as meltdown.
+
+In technical, an attack can train the branch predictor to mispredict a result of an instruction. The instruction we want to mispredict is boundary check. If we successfully bypass it, we can poison the branch and read the memory out of the access area.
 
 *Check Paper about [Meltdown](https://meltdownattack.com/meltdown.pdf) and [Spectre](https://spectreattack.com/spectre.pdf)*
 
